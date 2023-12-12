@@ -44,7 +44,6 @@ float calculate(float ll, float ul, int n)
 		else
 			res = res + 3 * fx[i];
 	}
-
     res = res * ( 3 * h / 8 ) ;
 	return res;
 }

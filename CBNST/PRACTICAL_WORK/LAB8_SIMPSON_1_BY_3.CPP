@@ -18,18 +18,17 @@ float simpsons_(float ll, float ul, int n)
 	// Calculating h
 	float h = (ul - ll) / n;
 
-	// Array is storing value of x and f(x)
+	
 	vector<float> x, fx;
 
 	// Calculating the x and f(x)
 
 	for (int i = 0; i <= n; i++) {
 		float tmp = ll + i * h;
+        
         x.push_back(tmp);
-
 		fx.push_back(func(tmp));
-        // x[i] = ll + i * h;
-		// fx[i] = func(x[i]);
+
 	}
 
 
