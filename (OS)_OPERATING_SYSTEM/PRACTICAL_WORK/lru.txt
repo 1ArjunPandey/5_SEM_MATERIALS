@@ -1,0 +1,87 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// Helper function to find the index of the given element in a vector
+int findIndex(const vector<int> &vec, int value) {
+    auto it = find(vec.begin(), vec.end(), value);
+    if (it != vec.end()) {
+        return distance(vec.begin(), it);
+    }
+    return -1;
+}
+
+// LRU Page Replacement Algorithm
+void lruPageReplacement(const vector<int> &pages, int frameCount) {
+    unordered_map<int, int> pageMap;  // Map to store page indices and their positions
+    vector<int> frames;
+
+    int pageFaults = 0;
+    int pos=0;
+
+    cout << "LRU Page Replacement Algorithm:\n";
+
+    for (int i = 0; i < pages.size(); ++i) {
+        int currentPage = pages[i];
+
+        if (find(frames.begin(),frames.end(),currentPage) == frames.end()) {
+            // Page fault
+            ++pageFaults;
+
+            if (frames.size() < frameCount) {
+                // Frames are not full, just add the page
+                frames.push_back(currentPage);
+                pageMap[currentPage] = pos++;
+            } else {
+                // Frames are full, find the least recently used page
+                int minpos = INT_MAX;
+                int minpage = -1;
+                for(auto it:frames){
+		   if(minpos> pageMap[it]) {
+		   minpage = it;
+		   minpos = pageMap[it];
+		   }
+		}
+		for(int i=0;i<frameCount;i++){
+		  if(frames[i]==minpage){
+		   frames[i]=currentPage;
+		   pageMap[currentPage]=pos++;
+		  }
+		}   	   
+            }
+        } 
+        else {
+            pageMap[currentPage] =pos++;
+        }
+        cout << "Page " << currentPage << " -> ";
+        for (int page : frames) {
+            cout << page << " ";
+        }
+        cout << endl;
+    }
+
+    cout << "Total Page Faults: " << pageFaults << endl;
+}
+
+int main() {
+    int frameCount, pageCount;
+
+    cout << "Enter the number of frames: ";
+    cin >> frameCount;
+
+    cout << "Enter the number of pages: ";
+    cin >> pageCount;
+
+    vector<int> pages(pageCount);
+
+    cout << "Enter the page sequence:\n";
+    for (int i = 0; i < pageCount; ++i) {
+        cin >> pages[i];
+    }
+
+   lruPageReplacement(pages, frameCount);
+
+
+    return 0;
+}
+
